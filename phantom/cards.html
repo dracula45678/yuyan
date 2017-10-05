@@ -299,6 +299,11 @@
 					$('.tiles').append(card_tmp);
 				});
 			}
+			else{
+				$.getJSON(trellojson, function (data) {
+					location.href = 'cards.html?listid=' + data.lists[0].id;
+				});
+			}
 		});
 	</script>
 </body>
