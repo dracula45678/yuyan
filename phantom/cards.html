@@ -26,7 +26,7 @@
 
 				<!-- Logo -->
 				<a href="index.html" class="logo">
-									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Phantom</span>
+									<span class="symbol"><i class="fa fa-external-link" aria-hidden="true"></i></span>
 								</a>
 
 				<!-- Nav -->
@@ -57,9 +57,7 @@
 		<div id="main">
 			<div class="inner">
 				<header>
-					<h1>This is Phantom, a free, fully responsive site<br /> template designed by <a href="http://html5up.net">HTML5 UP</a>.</h1>
-					<p>Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod sit amet nisi euismod sed cursus arcu elementum ipsum
-						arcu vivamus quis venenatis orci lorem ipsum et magna feugiat veroeros aliquam. Lorem ipsum dolor sit amet nullam dolore.</p>
+					<h1 class="cls_list_title"></h1>
 				</header>
 				<section class="tiles">
 					<!--<article class="style1">
@@ -199,7 +197,7 @@
 		</div>
 
 		<!-- Footer -->
-		<footer id="footer">
+		<!--<footer id="footer">
 			<div class="inner">
 				<section>
 					<h2>Get in touch</h2>
@@ -236,7 +234,7 @@
 					<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 				</ul>
 			</div>
-		</footer>
+		</footer>-->
 
 	</div>
 
@@ -265,15 +263,23 @@
 			};
 
 			var card_list_id = getUrlParameter('listid');
+			var card_list_json = getUrlParameter('json');
+
 			if (card_list_id != null) {
-				$.getJSON(trellojson, function (data) {
+				$.getJSON(card_list_json, function (data) {
 					//var items = [];
 					console.log(data.lists);
 
 					//menu list
 					var menu_list = "";
 					$.each(data.lists, function (index, value) {
-						menu_list += '<li list-id="' + value.id + '"><a href="cards.html?listid=' + value.id + '">' + value.name + '</a></li>';
+						//append menu list
+						menu_list += '<li list-id="' + value.id + '"><a href="cards.html?listid=' + value.id + '&json=' + card_list_json + '">' + value.name + '</a></li>';
+
+						//append title
+						if(value.id == card_list_id){
+							$('.cls_list_title').append(value.name);
+						}
 					});
 					$('#menu ul').append(menu_list);
 
@@ -300,8 +306,8 @@
 				});
 			}
 			else{
-				$.getJSON(trellojson, function (data) {
-					location.href = 'cards.html?listid=' + data.lists[0].id;
+				$.getJSON(card_list_json, function (data) {
+					location.href = 'cards.html?listid=' + data.lists[0].id + '&json=' + card_list_json;
 				});
 			}
 		});
